@@ -36,9 +36,11 @@ class RunappCommand(sublime_plugin.WindowCommand):
             # handle the embedded $var$ in args
             for i in range(0,len(args)):
                 arg = args[i]
-                arg = arg.replace('$FILE$', '"'+file+'"')
-                arg = arg.replace('$DIR$', '"'+dir+'"')
-                arg = arg.replace('$PROJ$', '"'+proj+'"')
+                ptn = '"%s"'
+                if sublime.platform() == 'osx': ptn = '%s'
+                arg = arg.replace('$FILE$', ptn % file)
+                arg = arg.replace('$DIR$', ptn % dir)
+                arg = arg.replace('$PROJ$', ptn % proj)
                 args[i] = arg
 
             # handle input
